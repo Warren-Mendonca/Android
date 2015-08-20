@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
 
@@ -99,6 +100,16 @@ public class MainActivity extends AppCompatActivity {
 
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+
+
+        //Set profile name according to user who is logged in
+        ParseUser currentUser= ParseUser.getCurrentUser();
+
+
+        TextView userdisplay=(TextView)findViewById(R.id.userName);
+        userdisplay.setText(currentUser.getUsername());
+
 
     }
 
