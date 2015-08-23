@@ -3,6 +3,7 @@ package com.mendonca.rentall;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.preference.PreferenceFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -112,6 +113,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+    }
+
+
 
 
     //Create new fragment based on position

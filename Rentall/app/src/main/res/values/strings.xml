@@ -15,5 +15,10 @@
     <string name="cfpwdhint">Confirm your password</string>
     <string name="title_activity_login_page">LoginPageActivity</string>
     <string name="title_activity_sign_up">SignUp</string>
+    <string name="address_hint">Enter a pickup address</string>
+    <string name="confirm">Rent it out!</string>
+    <string name="cancel">Take another picture?</string>
+    <string name="item_name_hint">Name your item</string>
+    <string name="rent_expected_hint">Enter rent/month expected</string>
 
 </resources>
