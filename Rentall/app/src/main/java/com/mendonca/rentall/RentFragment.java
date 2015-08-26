@@ -170,6 +170,9 @@ public class RentFragment extends android.app.Fragment {
 
         rentList.setPhotoFile(photoParse);
 
+        //set requested
+        rentList.setRequested("N");
+
         rentList.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

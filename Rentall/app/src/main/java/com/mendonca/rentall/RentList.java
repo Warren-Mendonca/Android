@@ -5,6 +5,8 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.io.Serializable;
+
 /**
  * Created by Warren on 8/22/2015.
  */
@@ -14,7 +16,7 @@ import com.parse.ParseUser;
  */
 
 @ParseClassName("RentList")
-public class RentList extends ParseObject {
+public class RentList extends ParseObject implements Serializable {
     public RentList(){
         //default constructor
     }
@@ -66,5 +68,11 @@ public class RentList extends ParseObject {
         put("photothumb", file);
     }
 
+    public void setRequested(String requested){
+        put ("requested",requested);
+    }
 
+    public String getRequested(){
+        return getString("requested");
+    }
 }

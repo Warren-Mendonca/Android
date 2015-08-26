@@ -112,19 +112,37 @@ public class MainActivity extends AppCompatActivity {
         userdisplay.setText(currentUser.getUsername());
 
 
+        //Create new home fragment
+        Fragment fragment;
+        fragment=new HomeFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+            this.finish();
+        } else {
+            getFragmentManager().popBackStack();
+        }
+    }
 
 
 
     //Create new fragment based on position
 
     private void selectItemFromDrawer(int position){
+
+        //Clear the back stack if anything is added on
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack(null,getFragmentManager().POP_BACK_STACK_INCLUSIVE);
+        }
 
         Fragment fragment;
         switch (position){
@@ -145,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getFragmentManager();
 
-        fragmentManager.beginTransaction().replace(R.id.mainContent,fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
         mDrawerList.setItemChecked(position,true);
         setTitle(mNavItems.get(position).mTitle);
 
