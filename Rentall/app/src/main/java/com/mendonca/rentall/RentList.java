@@ -75,4 +75,12 @@ public class RentList extends ParseObject implements Serializable {
     public String getRequested(){
         return getString("requested");
     }
+
+    public ParseUser getRequester() {
+        return getParseUser("requester");
+    }
+
+    public void setRequester(ParseUser user) {
+        put("requester", user);
+    }
 }

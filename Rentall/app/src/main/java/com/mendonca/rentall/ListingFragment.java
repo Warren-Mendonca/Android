@@ -84,7 +84,7 @@ public class ListingFragment extends android.app.Fragment  {
                 fragment=ViewDetailsFragment.newInstance(rentList);
 
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.mainContent,fragment).addToBackStack(RENT_LIST_TAG).commit();
+                fragmentManager.beginTransaction().replace(R.id.listmaincontent,fragment).addToBackStack(RENT_LIST_TAG).commit();
             }
         });
 

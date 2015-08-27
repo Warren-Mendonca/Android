@@ -29,6 +29,7 @@ public class CustomAdapter extends ParseQueryAdapter<RentList>{
                 // Here we can configure a ParseQuery to display
                 // only top-rated meals.
                 ParseQuery query = new ParseQuery("RentList");
+                query.addDescendingOrder("createdAt");
                 return query;
             }
         });
@@ -64,6 +65,10 @@ public class CustomAdapter extends ParseQueryAdapter<RentList>{
         TextView rentView = (TextView) v.findViewById(R.id.rent_expec);
         String expec= String.valueOf(rentlist.getRent());
         rentView.setText(expec);
+
+        if(rentlist.getRequested().equals("Y")){
+            v.findViewById(R.id.custom_list).setBackgroundColor(v.getResources().getColor(R.color.grey));
+        }
         return v;
     }
 

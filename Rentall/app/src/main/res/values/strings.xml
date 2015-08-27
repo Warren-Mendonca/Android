@@ -20,5 +20,6 @@
     <string name="cancel">Take another picture?</string>
     <string name="item_name_hint">Name your item</string>
     <string name="rent_expected_hint">Enter rent/month expected</string>
+    <string name="title_activity_listing">ListingActivity</string>
 
 </resources>

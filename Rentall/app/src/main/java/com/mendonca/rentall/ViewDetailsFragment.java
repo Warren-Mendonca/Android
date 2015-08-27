@@ -1,5 +1,6 @@
 package com.mendonca.rentall;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Bitmap;
@@ -108,14 +109,27 @@ public class ViewDetailsFragment extends android.app.Fragment {
                     public void done(ParseObject parseObject, ParseException e) {
 
                         if (e == null) {
-                            parseObject.put("requested", "Y");
-                            parseObject.saveInBackground();
-                            Toast.makeText(getActivity(), "Your have successfully requested the item!", Toast.LENGTH_LONG).show();
-                            Fragment fragment;
-                            fragment=new HomeFragment();
-                            FragmentManager fragmentManager = getFragmentManager();
-                            fragmentManager.beginTransaction().replace(R.id.mainContent,fragment).commit();
+                            if (mRentList.getRequested().equals("Y")) {
+                                Toast.makeText(getActivity(), "Sorry this item has already been requested!", Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                //set requested flag to true
+                                parseObject.put("requested", "Y");
+                                //set requester object
+                                ParseUser user=ParseUser.getCurrentUser();
+                                parseObject.put("requester",user);
 
+                                parseObject.saveInBackground();
+
+                                //Sucess message
+                                Toast.makeText(getActivity(), "Your have successfully requested the item!", Toast.LENGTH_LONG).show();
+
+                                getActivity().setResult(Activity.RESULT_OK);
+                                getActivity().finish();
+
+
+
+                            }
                         } else {
                             System.out.println("Error requesting object");
                             Toast.makeText(getActivity(), "Error requesting item!", Toast.LENGTH_LONG).show();

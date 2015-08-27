@@ -1,7 +1,9 @@
 package com.mendonca.rentall;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static String TAG=MainActivity.class.getSimpleName();
+    private static final int LISTING_ACTIVITY_CODE=111;
+
 
     ListView mDrawerList;
     RelativeLayout mDrawerPane;
@@ -74,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 selectItemFromDrawer(position);
             }
         });
@@ -116,12 +121,37 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment;
         fragment=new HomeFragment();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.mainContent, fragment,"HOME").commit();
+        setTitle("Home");
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==LISTING_ACTIVITY_CODE){
+            if(resultCode== Activity.RESULT_OK){
+                //Navigate to home
+                Fragment fragment;
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragment=fragmentManager.findFragmentByTag("HOME");
+                fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
+                setTitle("Home");
+            }
+            else if(resultCode==Activity.RESULT_CANCELED){
+                Fragment fragment;
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragment=fragmentManager.findFragmentByTag("HOME");
+                fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
+                setTitle("Home");
+
+            }
+
+        }
+        else{
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
     }
 
     @Override
@@ -139,31 +169,34 @@ public class MainActivity extends AppCompatActivity {
 
     private void selectItemFromDrawer(int position){
 
-        //Clear the back stack if anything is added on
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack(null,getFragmentManager().POP_BACK_STACK_INCLUSIVE);
-        }
+
 
         Fragment fragment;
+        FragmentManager fragmentManager = getFragmentManager();
         switch (position){
             case 0:
-                fragment=new HomeFragment();
+                fragment=fragmentManager.findFragmentByTag("HOME");
+                fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
                 break;
             case 1:
                 fragment=new RentFragment();
+                fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
                 break;
             case 2:
-                fragment=new ListingFragment();
+                Intent intent=new Intent(MainActivity.this,ListingActivity.class);
+                startActivityForResult(intent, LISTING_ACTIVITY_CODE);
+
                 break;
             default:
                 fragment=new PreferencesFragment();
+                fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
                 break;
         }
 
 
-        FragmentManager fragmentManager = getFragmentManager();
 
-        fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();
+
+
         mDrawerList.setItemChecked(position,true);
         setTitle(mNavItems.get(position).mTitle);
 
@@ -271,5 +304,7 @@ public class MainActivity extends AppCompatActivity {
             return view;
         }
     }
+
+
 
 }
